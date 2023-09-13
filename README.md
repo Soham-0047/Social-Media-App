@@ -1,0 +1,1 @@
+- when type:'module' then you have to import the packages with .js extension includsed.

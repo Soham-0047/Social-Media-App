@@ -42,7 +42,7 @@ const Navbar = () => {
             },
           }}
         >
-          
+         Nothing 
         </Typography>
 
         {isNonMobileScreens && (

@@ -11,8 +11,9 @@ import { fileURLToPath } from "url";
 import {register} from './controllers/auth.js'
 import authRoutes from './routes/auth.js'
 import userRoutes from './routes/users.js'
-
-
+import postRoutes from './routes/posts.js'
+import { verifyToken } from "./middleware/auth.js";
+import {createPost} from './controllers/posts.js'
 
 
 
@@ -28,9 +29,11 @@ const app = express();
 app.use(express.json());
 
 app.use(helmet());
+
 app.use(helmet.crossOriginResourcePolicy({policy:"cross-origin"}))
 
 app.use(morgan("common"));
+
 app.use(bodyParser.json({limit:"30mb",extended:true}));
 
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}))
@@ -57,15 +60,15 @@ const upload = multer({storage});
 
 app.post("/auth/register",upload.single("picture"),register);
 
-
+app.post("/posts",verifyToken,upload.single("picture"),createPost)
 
 
 //Routes section
 
 app.use("/auth",authRoutes);
-ap.use("/users",userRoutes)
+app.use("/users",userRoutes)
 
-
+app.use("/posts",postRoutes)
 
 //* Mongoose setup
 

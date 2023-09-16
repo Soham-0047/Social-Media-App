@@ -13,3 +13,12 @@ Currently, two official plugins are available:
 - It is a state management library
 You have only one state for your whole app, and not states for each of your components
 
+As it is stated in the Error message you have to "fetch first." This worked for me. Use the command:
+
+git fetch origin master
+Then follow these steps to merge:
+
+git pull origin master
+git add .
+git commit -m 'your commit message'
+git push origin master

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import LoginPage from "./pages/loginPage";
 import HomePage from "./pages/homePage";
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
-import Navbar from "./pages/navBar";
+// import Navbar from "./pages/navbar";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -16,16 +16,20 @@ function App() {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   const isAuth = Boolean(useSelector((state) => state.token));
+  console.log(isAuth)
 
   return (
     <div className="app">
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Navbar/>
+         
           <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/home"
+           element={isAuth ? <HomePage /> : <Navigate to="/"/>} />
+
+          <Route path="/profile/:userId"
+           element={isAuth ? <ProfilePage /> : <Navigate to="/"/>} />
         </Routes>
       </ThemeProvider>
     </div>
